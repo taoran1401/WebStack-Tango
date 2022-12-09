@@ -38,7 +38,7 @@ MongoDB:
     Uri: 'mongodb://xxx:xxx@127.0.0.1:27017/xxx'
 Mysql:
   - AliasName: 'xxx'
-    Uri: 'xxx:xxx@tcp(127.0.0.1:3306)/gva?charset=utf8&parseTime=True&loc=Local'
+    Uri: 'xxx:xxx@tcp(127.0.0.1:3306)/database?charset=utf8&parseTime=True&loc=Local'
     MaxIdleConns: 10
     MaxOpenConns: 100
 Redis:

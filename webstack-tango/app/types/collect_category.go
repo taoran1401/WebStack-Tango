@@ -9,15 +9,8 @@ type CollectCategoryBase struct {
 
 type CollectCategoryListReq struct {
 	Name     string `json:"name"`
-	Page     int64  `json:"page"`
-	PageSize int64  `json:"page_size"`
-}
-
-type CollectCategoryListResp struct {
-	Page     uint64
-	PageSize uint64
-	Total    uint64
-	List     []map[string]string
+	Page     uint64 `json:"page"`
+	PageSize uint64 `json:"page_size"`
 }
 
 type SaveCollectCategoryReq struct {

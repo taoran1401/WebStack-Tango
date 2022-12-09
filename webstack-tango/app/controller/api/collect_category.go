@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"taogin/app/logic"
 	"taogin/app/types"
 	"taogin/config/atom"
@@ -13,6 +14,24 @@ type CollectCategory struct {
 
 func NewCollectCategory() *CollectCategory {
 	return &CollectCategory{}
+}
+
+func (this *CollectCategory) Index(ctx *gin.Context) {
+	var (
+		req types.CollectCategoryListReq
+	)
+
+	if err := ctx.ShouldBindWith(&req, binding.JSON); err != nil {
+		response.Error(ctx, atom.ERROR_CODE_JSON, err.Error())
+		return
+	}
+
+	resp, err := logic.NewCollectCategoryLogic().GetList(&req)
+	if err != nil {
+		response.Error(ctx, atom.ERROR_CODE_EXCEPTION, err.Error())
+		return
+	}
+	response.Success(ctx, resp)
 }
 
 func (this *CollectCategory) Show(ctx *gin.Context) {

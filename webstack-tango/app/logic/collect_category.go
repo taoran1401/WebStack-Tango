@@ -6,6 +6,7 @@ import (
 	"taogin/app/model"
 	"taogin/app/types"
 	"taogin/config/global"
+	"taogin/core/utils"
 	"time"
 )
 
@@ -16,31 +17,21 @@ func NewCollectCategoryLogic() *CollectCategoryLogic {
 	return &CollectCategoryLogic{}
 }
 
-func (this *CollectCategoryLogic) GetList(req *types.CollectCategoryListReq) (resp *types.CollectCategoryListResp, err error) {
+func (this *CollectCategoryLogic) GetList(req *types.CollectCategoryListReq) (resp utils.PageInfo, err error) {
 	var (
-		total                uint64
 		collectCategoryModel model.CollectCategory
 	)
 
 	list := global.DB["default"].Model(collectCategoryModel)
 
-	//获取总数
-	if err := list.Count(&total).Error; err != nil {
-		return nil, err
-	}
-
 	if len(req.Name) > 0 {
 		list = list.Where("name", req.Name)
 	}
 
-	offset := (req.Page - 1) * req.PageSize
-	list.Offset(offset).Limit(req.PageSize).Find(&collectCategoryModel)
-	return &types.CollectCategoryListResp{
-		Total:    total,
-		Page:     0,
-		PageSize: 0,
-		//List:     collectCategoryModel,
-	}, nil
+	var collectCategoryList []model.CollectCategory
+	pageinfo, err := utils.Paginate(list, req.Page, req.PageSize, collectCategoryList)
+
+	return pageinfo, nil
 }
 
 func (this *CollectCategoryLogic) GetOne(id string) (resp *types.CollectCategoryBase) {

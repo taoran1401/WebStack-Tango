@@ -166,7 +166,7 @@ func (this *LoginLogic) SendPhoneCode(req *types.SendPhoneCodeReq) (err error) {
 		return errors.New("验证码生成失败")
 	}
 
-	/*switch req.Scene {
+	switch req.Scene {
 	case "register":
 		templateCode := "SMS_133930080"
 		templateParam := this.VerificationSmsTemplate(code)
@@ -182,7 +182,7 @@ func (this *LoginLogic) SendPhoneCode(req *types.SendPhoneCodeReq) (err error) {
 	default:
 		errors.New("参数错误")
 		break
-	}*/
+	}
 
 	if err != nil {
 		return err
